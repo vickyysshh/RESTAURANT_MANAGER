@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Raja Dhaba | Menu</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary": "#ff906a", "secondary": "#ff734c", "surface": "#0e0e0e", "background": "#0e0e0e", "on-surface": "#ffffff", "on-surface-variant": "#adaaaa", "surface-container-low": "#131313", "surface-container-high": "#20201f", "surface-container-highest": "#262626" }, fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Inter"] } } } }</script>
+    <style>.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }</style>
+</head>
+<body class="bg-background text-on-surface">
+    <header class="fixed top-0 w-full z-50 bg-stone-950/80 backdrop-blur-xl border-b border-white/5">
+        <nav class="flex justify-between items-center px-8 h-16 w-full">
+            <div class="text-xl font-bold italic text-primary" onclick="window.location.href='/role-selection'" style="cursor:pointer;font-family:'Plus Jakarta Sans'">Raja Dhaba</div>
+            <div class="hidden md:flex items-center gap-8">
+                <a class="text-stone-400 font-medium hover:text-primary transition-all" href="/role-selection">Dashboard</a>
+                <a class="text-primary font-bold border-b-2 border-primary pb-1" href="/restaurant-menu">Menu</a>
+                <a class="text-stone-400 font-medium hover:text-primary transition-all" href="/meal-plan">🍱 AI Meal Planner</a>
+                <a class="text-stone-400 font-medium hover:text-primary transition-all" href="#table-booking-section">Table Booking</a>
+                <a class="text-stone-400 font-medium hover:text-primary transition-all" href="#billing-section">Billing</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="logout()" class="material-symbols-outlined text-stone-400 hover:text-primary">logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-20 pb-24 px-6 lg:px-12">
+        <section class="mb-12 relative rounded-2xl overflow-hidden h-80 flex flex-col justify-end p-8">
+            <div class="absolute inset-0 z-0">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNOuEytrS_znNCswTLNT5F-XnfqsPX7UDF70bbrH75NqLDkn_S4yqFUEhfQppJGFiz--ZwM4Dh58ZS943kaRrtxMCllnMGHDZQLCKCFRji5QjNzzIGhK_XEBKrDj58PdikyNo--StUtm9Em9os3-T5pIQAWcjj_JMi3BvHAnwPHXyq_9KCC5xtDkLUX7gsEc60ga3xk_Mbf1ofuv8B-POEPrDcd9ZkJX-vh0E-RtOeR_Lxt-VXb95mHYspK9SJ2Hi6Zid5fJ6WH_I" alt="Hero" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+            </div>
+            <div class="relative z-10">
+                <div class="flex items-center gap-2 text-primary mb-2">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">star</span>
+                    <span class="font-bold text-lg">4.9</span>
+                </div>
+                <h1 class="font-headline text-5xl font-extrabold text-white mb-2 tracking-tight">Raja Dhaba</h1>
+                <p class="text-on-surface-variant font-body max-w-xl">Greater noida, Dabra 201310.</p>
+            </div>
+        </section>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="fixed top-6 right-6 z-[200] hidden">
+            <div id="toastInner" class="flex items-center gap-3 px-5 py-4 rounded-2xl shadow-2xl border border-white/10 backdrop-blur-md text-sm font-bold min-w-[280px]">
+                <span id="toastIcon" class="material-symbols-outlined"></span>
+                <span id="toastMsg"></span>
+            </div>
+        </div>
+
+        <!-- Category Selection -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold font-headline mb-4">Select Category</h2>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="filterByCategory('all')" class="categoryBtn active category-all px-6 py-3 rounded-xl font-bold transition-all border-2 bg-primary text-black border-primary hover:brightness-110 active:scale-95">
+                    All Items
+                </button>
+                <button onclick="filterByCategory('breakfast')" class="categoryBtn category-breakfast px-6 py-3 rounded-xl font-bold transition-all border-2 bg-stone-800 text-white border-stone-700 hover:border-primary hover:text-primary">
+                    <span class="material-symbols-outlined inline mr-2">breakfast_dining</span>Breakfast
+                </button>
+                <button onclick="filterByCategory('lunch')" class="categoryBtn category-lunch px-6 py-3 rounded-xl font-bold transition-all border-2 bg-stone-800 text-white border-stone-700 hover:border-primary hover:text-primary">
+                    <span class="material-symbols-outlined inline mr-2">lunch_dining</span>Lunch
+                </button>
+                <button onclick="filterByCategory('dinner')" class="categoryBtn category-dinner px-6 py-3 rounded-xl font-bold transition-all border-2 bg-stone-800 text-white border-stone-700 hover:border-primary hover:text-primary">
+                    <span class="material-symbols-outlined inline mr-2">dinner_dining</span>Dinner
+                </button>
+                <button onclick="filterByCategory('snacks')" class="categoryBtn category-snacks px-6 py-3 rounded-xl font-bold transition-all border-2 bg-stone-800 text-white border-stone-700 hover:border-primary hover:text-primary">
+                    <span class="material-symbols-outlined inline mr-2">fastfood</span>Snacks
+                </button>
+            </div>
+        </section>
+
+        <div id="menuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-32"></div>
+
+        <!-- My Orders Section -->
+        <section class="mt-12">
+            <h2 class="text-2xl font-bold font-headline mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">receipt_long</span> My Orders
+            </h2>
+            <div id="myOrdersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <section id="table-booking-section" class="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-8 scroll-mt-24">
+            <div class="bg-stone-900 rounded-2xl p-6 border border-white/5">
+                <h2 class="text-2xl font-bold font-headline mb-1">Pre-Book Table</h2>
+                <p class="text-sm text-on-surface-variant mb-6">Submit your table request for manager approval.</p>
+                <form id="tableBookingForm" class="space-y-4">
+                    <div>
+                        <label class="text-xs font-bold uppercase tracking-widest text-stone-500">Booking Date & Time</label>
+                        <input type="datetime-local" id="bookingDateTime" required class="mt-1 w-full bg-stone-800 border-none rounded-lg py-3 px-4 text-white focus:ring-1 focus:ring-primary" />
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-xs font-bold uppercase tracking-widest text-stone-500">Guests</label>
+                            <input type="number" id="guestCount" min="1" max="20" required class="mt-1 w-full bg-stone-800 border-none rounded-lg py-3 px-4 text-white focus:ring-1 focus:ring-primary" />
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold uppercase tracking-widest text-stone-500">Phone</label>
+                            <input type="text" id="contactPhone" placeholder="+91..." required class="mt-1 w-full bg-stone-800 border-none rounded-lg py-3 px-4 text-white focus:ring-1 focus:ring-primary" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold uppercase tracking-widest text-stone-500">Special Request</label>
+                        <textarea id="specialRequest" class="mt-1 w-full bg-stone-800 border-none rounded-lg py-3 px-4 text-white focus:ring-1 focus:ring-primary h-24" placeholder="Birthday setup, window table, etc."></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-primary text-black font-bold rounded-xl hover:brightness-110 active:scale-95 transition-all">Request Table</button>
+                </form>
+            </div>
+            <div class="bg-stone-900 rounded-2xl p-6 border border-white/5">
+                <h3 class="text-xl font-bold font-headline mb-1">My Table Requests</h3>
+                <p class="text-sm text-on-surface-variant mb-5">Track whether manager has approved your booking.</p>
+                <div id="myBookingList" class="space-y-3"></div>
+            </div>
+        </section>
+
+        <section id="billing-section" class="mt-14 bg-stone-900 rounded-2xl p-6 border border-white/5 scroll-mt-24">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold font-headline">Billing</h2>
+                    <p class="text-sm text-on-surface-variant">Your bill history and spend summary.</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs uppercase tracking-widest text-stone-500">Total Paid</p>
+                    <p id="myTotalPaid" class="text-3xl font-black text-primary">$0.00</p>
+                </div>
+            </div>
+            <div id="myBillsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+    </main>
+
+    <div id="cartBar" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-3rem)] md:w-auto md:min-w-[450px] hidden">
+        <div class="bg-stone-950/95 backdrop-blur-md border border-white/5 rounded-2xl p-5 flex items-center justify-between shadow-2xl">
+            <div class="flex items-center gap-4">
+                <div class="relative bg-primary/10 text-primary p-3 rounded-xl">
+                    <span class="material-symbols-outlined">shopping_bag</span>
+                    <div id="cartCount" class="absolute -top-1 -right-1 bg-primary text-black text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">0</div>
+                </div>
+                <div>
+                    <div class="text-xs font-bold text-stone-500 uppercase tracking-tighter">Your Selection</div>
+                    <div id="cartItemsSummary" class="text-sm font-bold text-white">0 Items</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="text-right">
+                    <div class="text-xs font-bold text-stone-500 uppercase tracking-tighter">Total</div>
+                    <div id="cartTotal" class="text-xl font-black text-primary">$0.00</div>
+                </div>
+                <button onclick="placeOrder()" class="bg-primary text-black font-bold px-8 py-3 rounded-xl hover:scale-105 active:scale-95 transition-all shadow-lg">Order Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let menuItems = {};
+        let allMenuItems = [];
+        let currentCategory = 'all';
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const inner = document.getElementById('toastInner');
+            const icon = document.getElementById('toastIcon');
+            const msgEl = document.getElementById('toastMsg');
+            icon.innerText = type === 'success' ? 'check_circle' : 'error';
+            msgEl.innerText = msg;
+            inner.className = `flex items-center gap-3 px-5 py-4 rounded-2xl shadow-2xl border border-white/10 backdrop-blur-md text-sm font-bold min-w-[280px] ${type === 'success' ? 'bg-green-900/80 text-green-300' : 'bg-red-900/80 text-red-300'}`;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3500);
+        }
+
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // Update active button styling
+            document.querySelectorAll('.categoryBtn').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary', 'text-black', 'border-primary');
+                btn.classList.add('bg-stone-800', 'text-white', 'border-stone-700');
+            });
+            
+            const activeBtn = document.querySelector(`.category-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'bg-primary', 'text-black', 'border-primary');
+                activeBtn.classList.remove('bg-stone-800', 'text-white', 'border-stone-700');
+            }
+            
+            displayMenu(category);
+        }
+
+        function displayMenu(category = 'all') {
+            let itemsToDisplay = allMenuItems;
+            
+            if (category !== 'all') {
+                itemsToDisplay = allMenuItems.filter(item => 
+                    item.category && item.category.toLowerCase() === category.toLowerCase()
+                );
+            }
+            
+            menuItems = {};
+            document.getElementById('menuGrid').innerHTML = itemsToDisplay.length === 0
+                ? `<div class="col-span-3 text-center text-stone-500 py-12"><span class="material-symbols-outlined text-5xl mb-3 block">restaurant_menu</span>No items in this category</div>`
+                : itemsToDisplay.map(item => {
+                    menuItems[item.id] = item;
+                    const isOutOfStock = item.inStock === false;
+                    return `
+                    <div class="group bg-stone-900 rounded-2xl overflow-hidden transition-all duration-300 border border-white/5 ${isOutOfStock ? 'opacity-50 grayscale' : 'hover:bg-stone-800'}">
+                        ${item.imageUrl ? `<div class="h-48 overflow-hidden"><img src="${item.imageUrl}" class="w-full h-full object-cover ${!isOutOfStock ? 'group-hover:scale-105' : ''} transition-transform duration-500" onerror="this.parentElement.style.display='none'" /></div>` : `<div class="h-48 bg-stone-800 flex items-center justify-center"><span class="material-symbols-outlined text-5xl text-stone-600">fastfood</span></div>`}
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-headline text-xl font-bold text-white">${item.itemName}</h4>
+                                <span class="text-primary font-bold tabular-nums">$${(item.price || 0).toFixed(2)}</span>
+                            </div>
+                            <p class="text-on-surface-variant text-sm mb-2 font-body leading-relaxed"><span class="inline-block px-2 py-1 bg-stone-800 rounded text-xs font-bold text-primary capitalize">${item.category || 'Other'}</span></p>
+                            <p class="text-on-surface-variant text-sm mb-6 font-body leading-relaxed h-12 line-clamp-2">${item.description || 'No description available'}</p>
+                            
+                            ${isOutOfStock 
+                                ? `<button disabled class="w-full py-3 bg-red-900/50 text-red-400 font-bold rounded-xl flex items-center justify-center gap-2 cursor-not-allowed">
+                                    <span class="material-symbols-outlined text-sm">block</span> Out of Stock
+                                   </button>`
+                                : `<button onclick="addToCart('${item.id}')" class="w-full py-3 bg-stone-700 hover:bg-primary hover:text-black text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 active:scale-95">
+                                    <span class="material-symbols-outlined text-sm">add_shopping_cart</span> Add to Cart
+                                   </button>`
+                            }
+                        </div>
+                    </div>`;
+                }).join('');
+        }
+
+        async function loadMenu() {
+            try {
+                const resp = await fetch('/api/menu');
+                const items = await resp.json();
+                allMenuItems = items;
+                displayMenu('all');
+            } catch (err) { console.error('Failed to load menu:', err); }
+        }
+
+        function addToCart(id) {
+            const item = menuItems[id];
+            if (!item) return;
+            const existing = cart.find(i => i.menuItem.id === id);
+            if (existing) { existing.quantity++; }
+            else { cart.push({ menuItem: { id: item.id, itemName: item.itemName, price: item.price }, quantity: 1, subtotal: item.price }); }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartBar = document.getElementById('cartBar');
+            if (cart.length > 0) {
+                cartBar.classList.remove('hidden');
+                const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
+                const totalPrice = cart.reduce((s, i) => s + (i.menuItem.price * i.quantity), 0);
+                document.getElementById('cartCount').innerText = totalItems;
+                document.getElementById('cartItemsSummary').innerText = `${totalItems} Item${totalItems > 1 ? 's' : ''}`;
+                document.getElementById('cartTotal').innerText = `$${totalPrice.toFixed(2)}`;
+            } else { cartBar.classList.add('hidden'); }
+        }
+
+        async function placeOrder() {
+            if (cart.length === 0) return showToast('Your cart is empty!', 'error');
+            const totalPrice = cart.reduce((s, i) => s + (i.menuItem.price * i.quantity), 0);
+            const formattedItems = cart.map(i => ({ menuItem: { itemName: i.menuItem.itemName, price: i.menuItem.price, id: i.menuItem.id }, quantity: i.quantity, subtotal: i.menuItem.price * i.quantity }));
+            try {
+                const resp = await fetch('/api/orders', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: formattedItems, totalPrice }) });
+                if (resp.ok) {
+                    showToast('Your order has been successfully placed!');
+                    cart = [];
+                    updateCartUI();
+                    setTimeout(() => loadMyOrders(), 1000);
+                } else {
+                    const err = await resp.json();
+                    showToast('Order failed: ' + err.error, 'error');
+                }
+            } catch (err) { showToast('Error placing order', 'error'); }
+        }
+
+        async function loadMyOrders() {
+            try {
+                const resp = await fetch('/api/orders/my-orders');
+                if (!resp.ok) return;
+                const orders = await resp.json();
+                const statusColors = { PAID: 'bg-blue-500/20 text-blue-400', PREPARING: 'bg-orange-500/20 text-orange-400', READY: 'bg-green-500/20 text-green-400', DELIVERED: 'bg-stone-700 text-stone-400' };
+                const statusIcons = { PAID: 'schedule', PREPARING: 'skillet', READY: 'check_circle', DELIVERED: 'done_all' };
+                document.getElementById('myOrdersList').innerHTML = orders.length === 0
+                    ? `<div class="col-span-3 text-center text-stone-500 py-12"><span class="material-symbols-outlined text-5xl mb-3 block">receipt_long</span>No orders yet</div>`
+                    : orders.map(order => `
+                    <div class="bg-stone-900 rounded-2xl p-5 border border-white/5">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <span class="text-[10px] font-bold text-stone-500 uppercase tracking-widest">Order</span>
+                                <p class="font-mono font-bold text-white">#${order.id.slice(-6).toUpperCase()}</p>
+                            </div>
+                            <span class="flex items-center gap-1 text-[11px] font-black uppercase px-3 py-1 rounded-full ${statusColors[order.status] || 'bg-stone-700 text-stone-300'}">
+                                <span class="material-symbols-outlined text-sm">${statusIcons[order.status] || 'help'}</span> ${order.status}
+                            </span>
+                        </div>
+                        <div class="text-xs text-stone-400 mb-3">${order.items.map(i => `${i.quantity}x ${i.menuItem.itemName}`).join(', ')}</div>
+                        <div class="text-right font-bold text-primary">$${(order.totalPrice || 0).toFixed(2)}</div>
+                    </div>`).join('');
+            } catch (err) { console.error('Failed to load orders:', err); }
+        }
+
+        async function loadMyBookings() {
+            try {
+                const resp = await fetch('/api/table-bookings/my');
+                if (!resp.ok) return;
+                const bookings = await resp.json();
+                const statusClass = {
+                    PENDING: 'bg-yellow-500/20 text-yellow-300',
+                    APPROVED: 'bg-green-500/20 text-green-300',
+                    REJECTED: 'bg-red-500/20 text-red-300'
+                };
+
+                document.getElementById('myBookingList').innerHTML = bookings.length === 0
+                    ? `<div class="text-center text-stone-500 py-8"><span class="material-symbols-outlined text-4xl block mb-2">table_restaurant</span>No table requests yet</div>`
+                    : bookings.map(booking => `
+                        <div class="bg-stone-800/80 rounded-xl p-4 border border-white/5">
+                            <div class="flex justify-between items-start gap-3 mb-2">
+                                <div>
+                                    <p class="text-sm font-bold text-white">${new Date(booking.bookingDateTime).toLocaleString()}</p>
+                                    <p class="text-xs text-stone-400">${booking.guestCount} Guests • ${booking.contactPhone || '-'}</p>
+                                </div>
+                                <span class="text-[10px] uppercase font-black px-2 py-1 rounded ${statusClass[booking.status] || 'bg-stone-700 text-stone-300'}">${booking.status}</span>
+                            </div>
+                            <p class="text-xs text-stone-500">${booking.specialRequest || 'No special request'}${booking.managerNote ? ` • Manager note: ${booking.managerNote}` : ''}</p>
+                        </div>
+                    `).join('');
+            } catch (err) {
+                console.error('Failed to load bookings:', err);
+            }
+        }
+
+        async function loadMyBilling() {
+            try {
+                const resp = await fetch('/api/billing/my');
+                if (!resp.ok) return;
+                const data = await resp.json();
+                const orders = data.orders || [];
+                const summary = data.summary || { totalPaid: 0 };
+
+                document.getElementById('myTotalPaid').innerText = `$${(summary.totalPaid || 0).toFixed(2)}`;
+                document.getElementById('myBillsList').innerHTML = orders.length === 0
+                    ? `<div class="col-span-3 text-center text-stone-500 py-8"><span class="material-symbols-outlined text-4xl block mb-2">receipt_long</span>No bills yet</div>`
+                    : orders.map(order => `
+                        <div class="bg-stone-800 rounded-xl p-4 border border-white/5">
+                            <div class="flex justify-between items-start mb-2">
+                                <p class="text-xs text-stone-400 font-mono">Bill #${order.id.slice(-6).toUpperCase()}</p>
+                                <p class="text-xs text-stone-400">${order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '-'}</p>
+                            </div>
+                            <p class="text-xs text-stone-500 mb-2">${order.items.map(i => `${i.quantity}x ${i.menuItem.itemName}`).join(', ')}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] uppercase px-2 py-1 rounded bg-stone-700 text-stone-300">${order.status}</span>
+                                <span class="text-lg font-black text-primary">$${(order.totalPrice || 0).toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `).join('');
+            } catch (err) {
+                console.error('Failed to load billing:', err);
+            }
+        }
+
+        document.getElementById('tableBookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                bookingDateTime: document.getElementById('bookingDateTime').value,
+                guestCount: parseInt(document.getElementById('guestCount').value, 10),
+                contactPhone: document.getElementById('contactPhone').value,
+                specialRequest: document.getElementById('specialRequest').value
+            };
+
+            const resp = await fetch('/api/table-bookings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (resp.ok) {
+                showToast('Table booking request submitted.');
+                document.getElementById('tableBookingForm').reset();
+                loadMyBookings();
+            } else {
+                const err = await resp.json().catch(() => ({}));
+                showToast(err.error || 'Failed to submit table booking', 'error');
+            }
+        });
+
+        async function logout() {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            window.location.href = '/login';
+        }
+
+        loadMenu();
+        loadMyOrders();
+        loadMyBookings();
+        loadMyBilling();
+        setInterval(loadMyOrders, 5000);
+        setInterval(loadMyBookings, 10000);
+        setInterval(loadMyBilling, 10000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Profit Plate - Browse</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary": "#ff906a", "secondary": "#ff734c", "surface": "#0e0e0e", "background": "#0e0e0e", "on-surface": "#ffffff", "on-surface-variant": "#adaaaa", "surface-container-high": "#20201f", "surface-container-highest": "#262626", "surface-container-low": "#131313" }, fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Inter"] } } } }</script>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+    <nav class="fixed top-0 w-full z-50 bg-stone-950/80 backdrop-blur-xl shadow-lg flex justify-between items-center px-8 h-16">
+        <div class="flex items-center gap-8">
+            <span class="text-xl font-bold italic text-primary" style="font-family:'Plus Jakarta Sans'">Profit Plate</span>
+            <div class="hidden md:flex gap-6">
+                <a class="text-stone-400 font-medium hover:text-primary transition-all" href="/role-selection">Dashboard</a>
+                <a class="text-stone-400 font-medium hover:text-primary transition-all" href="/meal-plan">🍱 AI Meal Planner</a>
+                <a class="text-stone-400 font-medium hover:text-primary transition-all" href="/restaurant-menu">Menu</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="material-symbols-outlined text-stone-400 hover:text-primary" onclick="logout()">logout</button>
+        </div>
+    </nav>
+
+    <main class="pt-16 min-h-screen bg-background">
+        <section class="relative h-[480px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-stone-900">
+            <div class="absolute inset-0 z-0 opacity-10">
+                <div class="absolute top-10 left-1/4 text-6xl">🍔</div>
+                <div class="absolute top-20 right-1/3 text-6xl">🍜</div>
+                <div class="absolute bottom-20 left-1/3 text-6xl">🍕</div>
+            </div>
+            <div class="relative z-10 w-full max-w-3xl px-6 text-center">
+                <h1 class="font-headline text-5xl md:text-6xl font-extrabold text-on-surface tracking-tight mb-8">
+                    The Night is <span class="text-primary italic">Delivered.</span>
+                </h1>
+                <div class="flex items-center bg-stone-900/80 backdrop-blur-md rounded-2xl p-2 shadow-2xl border border-white/5">
+                    <span class="material-symbols-outlined px-4 text-on-surface-variant">search</span>
+                    <input class="w-full bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant py-4 font-medium" placeholder="Search for restaurants, cuisines..." type="text" />
+                    <button onclick="window.location.href='/restaurant-menu'" class="bg-primary hover:bg-primary/90 text-black px-8 py-4 rounded-xl font-bold transition-all active:scale-95 shrink-0">Explore Menu</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="px-8 py-12 max-w-[1400px] mx-auto">
+            <h2 class="font-headline text-3xl font-bold text-on-surface tracking-tight mb-8">Featured Pass</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Restaurant 1: Raja Dhaba -->
+                <div class="group cursor-pointer" onclick="window.location.href='/restaurant-menu'">
+                    <div class="relative aspect-[4/3] rounded-3xl overflow-hidden mb-5 bg-stone-800">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwxBVH2x4AEigF5xliYJL5HqEDHRCBfBnTfm8Q8mqyx5W_o7id6WwfWazZEHc9cbr1qcmrmFs9VDpS8sd_QXGo-IpFKwlWgJ3Lcoj_0pk5LYjWlR44hFDNzJrBd-hjjOtS7mQ8a_WEt54AGVbOGc06SBFz7MWCfdRjcBPp-RMPL7o3FYDjhS0sZZLjPkBh9tuQfzSEYGSLMyjtCNSwyluuK7PrcEDrri9DPpAgI9rXeQ3zAi2LxumeCh3rEbYB5zL4AAJhfzFraNc" alt="Raja Dhaba" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-white/10">
+                            <span class="material-symbols-outlined text-yellow-500 text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+                            <span class="text-sm font-bold text-on-surface">4.8</span>
+                        </div>
+                    </div>
+                    <h3 class="font-headline text-xl font-bold text-on-surface group-hover:text-primary transition-colors">Raja Dhaba</h3>
+                    <p class="text-sm text-on-surface-variant font-medium">North Indian &nbsp; $$$ • Noida</p>
+                </div>
+
+                <!-- Restaurant 2: The Spice Garden -->
+                <div class="group cursor-pointer" onclick="window.location.href='/restaurant-menu'">
+                    <div class="relative aspect-[4/3] rounded-3xl overflow-hidden mb-5 bg-stone-800">
+                        <img src="https://img.freepik.com/free-photo/restaurant-interior_1127-3394.jpg" alt="The Spice Garden" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-white/10">
+                            <span class="material-symbols-outlined text-yellow-500 text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+                            <span class="text-sm font-bold text-on-surface">4.6</span>
+                        </div>
+                    </div>
+                    <h3 class="font-headline text-xl font-bold text-on-surface group-hover:text-primary transition-colors">The Spice Garden</h3>
+                    <p class="text-sm text-on-surface-variant font-medium">Indian Fusion &nbsp; $$ • Delhi</p>
+                </div>
+
+                <!-- Restaurant 3: Coastal Cravings -->
+                <div class="group cursor-pointer" onclick="window.location.href='/restaurant-menu'">
+                    <div class="relative aspect-[4/3] rounded-3xl overflow-hidden mb-5 bg-stone-800">
+                        <img src="https://plus.unsplash.com/premium_photo-1745946640161-01dda3002d48?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Coastal Cravings" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-white/10">
+                            <span class="material-symbols-outlined text-yellow-500 text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+                            <span class="text-sm font-bold text-on-surface">4.7</span>
+                        </div>
+                    </div>
+                    <h3 class="font-headline text-xl font-bold text-on-surface group-hover:text-primary transition-colors">Coastal Cravings</h3>
+                    <p class="text-sm text-on-surface-variant font-medium">Seafood &nbsp; $$$ • Gurugram</p>
+                </div>
+
+                <!-- Restaurant 4: Garden Bistro -->
+                <div class="group cursor-pointer" onclick="window.location.href='/restaurant-menu'">
+                    <div class="relative aspect-[4/3] rounded-3xl overflow-hidden mb-5 bg-stone-800">
+                        <img src="https://plus.unsplash.com/premium_photo-1744567294212-ae490224209c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Garden Bistro" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-white/10">
+                            <span class="material-symbols-outlined text-yellow-500 text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+                            <span class="text-sm font-bold text-on-surface">4.5</span>
+                        </div>
+                    </div>
+                    <h3 class="font-headline text-xl font-bold text-on-surface group-hover:text-primary transition-colors">Garden Bistro</h3>
+                    <p class="text-sm text-on-surface-variant font-medium">Vegetarian &nbsp; $$ • Bangalore</p>
+                </div>
+
+                <!-- Restaurant 5: Fire & Flame Grill -->
+                <div class="group cursor-pointer" onclick="window.location.href='/restaurant-menu'">
+                    <div class="relative aspect-[4/3] rounded-3xl overflow-hidden mb-5 bg-stone-800">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZVjaLBODwDcAurHoWU5QiISMlsVZyEQnufA&s" alt="Fire & Flame Grill" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-white/10">
+                            <span class="material-symbols-outlined text-yellow-500 text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+                            <span class="text-sm font-bold text-on-surface">4.9</span>
+                        </div>
+                    </div>
+                    <h3 class="font-headline text-xl font-bold text-on-surface group-hover:text-primary transition-colors">Fire & Flame Grill</h3>
+                    <p class="text-sm text-on-surface-variant font-medium">BBQ & Steaks &nbsp; $$$$ • Mumbai</p>
+                </div>
+
+                <!-- Restaurant 6: Lotus Palace -->
+                <div class="group cursor-pointer" onclick="window.location.href='/restaurant-menu'">
+                    <div class="relative aspect-[4/3] rounded-3xl overflow-hidden mb-5 bg-stone-800">
+                        <img src="https://t3.ftcdn.net/jpg/01/28/52/18/360_F_128521888_fmzQgeBbrnCpAS7A4wKPKbu0VDikCeBh.jpg" alt="Lotus Palace" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-white/10">
+                            <span class="material-symbols-outlined text-yellow-500 text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+                            <span class="text-sm font-bold text-on-surface">4.7</span>
+                        </div>
+                    </div>
+                    <h3 class="font-headline text-xl font-bold text-on-surface group-hover:text-primary transition-colors">Lotus Palace</h3>
+                    <p class="text-sm text-on-surface-variant font-medium">Asian Cuisine &nbsp; $$$ • Hyderabad</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="px-8 py-12 max-w-[1400px] mx-auto">
+            <h2 class="font-headline text-3xl font-bold text-on-surface tracking-tight mb-8">Quick Snacks</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="snacksGrid"></div>
+        </section>
+    </main>
+
+    <script>
+        async function logout() {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            window.location.href = '/login';
+        }
+
+        async function loadSnacks() {
+            try {
+                const resp = await fetch('/api/menu');
+                const items = await resp.json();
+                const snacks = items.filter(item => item.category === 'snacks');
+                const snacksGrid = document.getElementById('snacksGrid');
+                
+                if (snacks.length === 0) {
+                    snacksGrid.innerHTML = '<div class="col-span-full text-center text-stone-500 py-12">No snacks available</div>';
+                    return;
+                }
+                
+                snacksGrid.innerHTML = snacks.map(item => `
+                    <div class="group bg-stone-900 rounded-2xl overflow-hidden transition-all duration-300 border border-white/5 hover:bg-stone-800">
+                        ${item.imageUrl ? `<div class="h-48 overflow-hidden"><img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.parentElement.style.display='none'" /></div>` : `<div class="h-48 bg-stone-800 flex items-center justify-center"><span class="material-symbols-outlined text-5xl text-stone-600">fastfood</span></div>`}
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-headline text-lg font-bold text-white">${item.itemName}</h4>
+                                <span class="text-primary font-bold">$${(item.price || 0).toFixed(2)}</span>
+                            </div>
+                            <p class="text-on-surface-variant text-sm mb-3">${item.description || 'Delicious snack'}</p>
+                            <button onclick="window.location.href='/restaurant-menu'" class="w-full py-2 bg-stone-700 hover:bg-primary hover:text-black text-white font-bold rounded-lg transition-all text-sm">Order Now</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Failed to load snacks:', err);
+            }
+        }
+
+        loadSnacks();
+    </script>
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Meal Plan Dashboard - Restaurant App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-primary { background: linear-gradient(135deg, #ff906a 0%, #ff734c 100%); }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="bg-white shadow-md sticky top-0 z-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center gap-2 cursor-pointer hover:opacity-80" onclick="window.location.href='/role-selection'">
+                <div class="w-10 h-10 gradient-primary rounded-lg flex items-center justify-center text-white font-bold">🍽️</div>
+                <span class="font-bold text-lg text-gray-800">Profit Plate</span>
+            </div>
+            <div class="hidden md:flex items-center gap-6">
+                <a href="/customer-browse" class="text-gray-600 hover:text-primary font-medium">Home</a>
+                <a href="/restaurant-menu" class="text-gray-600 hover:text-primary font-medium">Menu</a>
+                <a href="/meal-plan" class="text-primary font-bold">🍱 Meal Planner</a>
+                <a href="/role-selection" class="text-gray-600 hover:text-primary font-medium">Dashboard</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="logout()" class="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium">Logout</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Container -->
+<div class="max-w-7xl mx-auto px-4 py-8">
+
+    <!-- Header Section -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-2">AI-Powered Meal Planner</h1>
+        <p class="text-gray-600">Create personalized meal plans based on your health goals and dietary preferences</p>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Left Column: Questionnaire Form -->
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Your Preferences</h2>
+
+                <form id="dietForm" class="space-y-4">
+                    
+                    <!-- Health Goal -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Health Goal *</label>
+                        <select id="healthGoal" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" required>
+                            <option value="">Select goal</option>
+                            <option value="Weight Loss">Weight Loss</option>
+                            <option value="Muscle Gain">Muscle Gain</option>
+                            <option value="Balanced Diet">Balanced Diet</option>
+                            <option value="Disease Management">Disease Management</option>
+                        </select>
+                    </div>
+
+                    <!-- Dietary Restrictions -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Dietary Restrictions</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="dietary-restriction rounded" value="Vegan">
+                                <span class="ml-2 text-sm text-gray-700">Vegan</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="dietary-restriction rounded" value="Vegetarian">
+                                <span class="ml-2 text-sm text-gray-700">Vegetarian</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="dietary-restriction rounded" value="Gluten-free">
+                                <span class="ml-2 text-sm text-gray-700">Gluten-free</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="dietary-restriction rounded" value="Dairy-free">
+                                <span class="ml-2 text-sm text-gray-700">Dairy-free</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Cuisine Preference -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Preferred Cuisines</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="cuisine-pref rounded" value="Indian">
+                                <span class="ml-2 text-sm text-gray-700">Indian</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="cuisine-pref rounded" value="Chinese">
+                                <span class="ml-2 text-sm text-gray-700">Chinese</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="cuisine-pref rounded" value="Continental">
+                                <span class="ml-2 text-sm text-gray-700">Continental</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Daily Budget -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Daily Budget (₹) *</label>
+                        <input type="number" id="budgetPerDay" placeholder="e.g., 500" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500" required>
+                    </div>
+
+                    <!-- Target Calories -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Target Daily Calories *</label>
+                        <input type="number" id="targetDailyCalories" placeholder="e.g., 2000" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500" required>
+                    </div>
+
+                    <!-- Plan Duration -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Plan Duration *</label>
+                        <select id="planDuration" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500" required>
+                            <option value="">Select duration</option>
+                            <option value="3">3 Days</option>
+                            <option value="7">7 Days</option>
+                            <option value="14">14 Days</option>
+                            <option value="30">30 Days</option>
+                        </select>
+                    </div>
+
+                    <!-- AI Meal Plan Toggle -->
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="useAIMealPlan" checked class="w-4 h-4 rounded border-gray-300">
+                            <span class="ml-3 text-sm font-semibold text-gray-700">🤖 Use AI-Powered Meal Plan</span>
+                        </label>
+                        <p class="text-xs text-gray-600 mt-2">Enable AI to automatically select meals matching your goals and preferences</p>
+                    </div>
+
+                    <!-- Weight & Height -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Weight (kg) *</label>
+                            <input type="number" id="weight" placeholder="e.g., 70" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Height (cm) *</label>
+                            <input type="number" id="height" placeholder="e.g., 175" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500" required>
+                        </div>
+                    </div>
+
+                    <!-- Disliked Foods -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Disliked Foods</label>
+                        <textarea id="dislikedFoods" placeholder="e.g., Mushrooms, Bitter Gourd" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm" rows="2"></textarea>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button type="submit" class="w-full gradient-primary text-white font-bold py-3 rounded-lg hover:opacity-90 transition">
+                        Generate Meal Plan ✨
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Column: Meal Plans Display -->
+        <div class="lg:col-span-2">
+            
+            <!-- Current Meal Plan -->
+            <div id="mealPlanContainer" class="hidden">
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Your Meal Plan</h2>
+                        <div class="flex items-center gap-3">
+                            <span id="planDate" class="text-sm text-gray-500"></span>
+                            <button onclick="deleteMealPlan()" class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-lg text-sm font-medium transition">
+                                🗑️ Delete Plan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AI Explanation -->
+                    <div id="aiExplanation" class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
+                        <p class="text-blue-900 text-sm"></p>
+                    </div>
+
+                    <!-- Nutritional Summary -->
+                    <div class="grid grid-cols-4 gap-4 mb-6">
+                        <div class="bg-gradient-to-br from-orange-100 to-orange-50 p-4 rounded-lg">
+                            <p class="text-gray-600 text-sm font-medium">Avg Calories</p>
+                            <p id="avgCalories" class="text-2xl font-bold text-orange-600">2000 cal</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-100 to-green-50 p-4 rounded-lg">
+                            <p class="text-gray-600 text-sm font-medium">Protein</p>
+                            <p id="proteinValue" class="text-2xl font-bold text-green-600">85g</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-yellow-100 to-yellow-50 p-4 rounded-lg">
+                            <p class="text-gray-600 text-sm font-medium">Carbs</p>
+                            <p id="carbsValue" class="text-2xl font-bold text-yellow-600">200g</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-100 to-red-50 p-4 rounded-lg">
+                            <p class="text-gray-600 text-sm font-medium">Fats</p>
+                            <p id="fatValue" class="text-2xl font-bold text-red-600">50g</p>
+                        </div>
+                    </div>
+
+                    <!-- Daily Meals Tabs -->
+                    <div class="space-y-4" id="dailyMealsContainer">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Meal Plan Placeholder -->
+            <div id="noMealPlanPlaceholder" class="bg-white rounded-lg shadow-lg p-12 text-center">
+                <div class="text-6xl mb-4">🍱</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">No Meal Plan Yet</h3>
+                <p class="text-gray-600 mb-6">Fill out the preferences form and click "Generate Meal Plan" to get started!</p>
+                <div class="inline-block px-4 py-2 gradient-primary text-white rounded-lg text-sm opacity-50">
+                    Complete form above ↑
+                </div>
+            </div>
+
+            <!-- Previous Plans -->
+            <div id="previousPlansContainer" class="hidden">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Previous Plans</h3>
+                <div id="previousPlansList" class="grid grid-cols-1 gap-4">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get current user
+    let currentUserId = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Get current user info
+        try {
+            const res = await fetch('/api/auth/me');
+            const user = await res.json();
+            currentUserId = user.id;
+            loadMealPlans();
+        } catch (e) {
+            window.location.href = '/login';
+        }
+
+        // Form submission
+        document.getElementById('dietForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await saveDietProfile();
+        });
+    });
+
+    async function saveDietProfile() {
+        const dietaryRestrictions = Array.from(document.querySelectorAll('.dietary-restriction:checked')).map(el => el.value);
+        const cuisinePreferences = Array.from(document.querySelectorAll('.cuisine-pref:checked')).map(el => el.value);
+        const dislikedFoodsText = document.getElementById('dislikedFoods').value;
+        const dislikedFoods = dislikedFoodsText ? dislikedFoodsText.split(',').map(f => f.trim()) : [];
+
+        const profile = {
+            healthGoal: document.getElementById('healthGoal').value,
+            dietaryRestrictions,
+            cuisinePreferences,
+            budgetPerDay: parseFloat(document.getElementById('budgetPerDay').value),
+            targetDailyCalories: parseInt(document.getElementById('targetDailyCalories').value),
+            planDurationDays: parseInt(document.getElementById('planDuration').value),
+            weight: parseFloat(document.getElementById('weight').value),
+            height: parseFloat(document.getElementById('height').value),
+            dislikedFoods
+        };
+
+        const useAI = document.getElementById('useAIMealPlan').checked;
+
+        try {
+            // Save diet profile
+            const saveRes = await fetch('/api/diet-profile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(profile)
+            });
+            const saveData = await saveRes.json();
+            
+            if (!useAI) {
+                alert('ℹ️ AI mode is disabled. Please enable "Use AI-Powered Meal Plan" for automatic meal selection.');
+                return;
+            }
+            
+            // Generate meal plan
+            const genRes = await fetch('/api/generate-meal-plan', { method: 'POST' });
+            const genData = await genRes.json();
+            
+            if (genRes.ok) {
+                displayMealPlan(genData.mealPlan);
+                loadMealPlans();
+            } else {
+                alert('⚠️ Error: ' + (genData.error || 'Failed to generate meal plan'));
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to generate meal plan. Please try again.');
+        }
+    }
+
+    async function loadMealPlans() {
+        try {
+            const res = await fetch('/api/meal-plans');
+            const plans = await res.json();
+            
+            if (plans && plans.length > 0) {
+                displayMealPlan(plans[0]);
+                if (plans.length > 1) {
+                    displayPreviousPlans(plans.slice(1));
+                }
+            }
+        } catch (error) {
+            console.error('Error loading meal plans:', error);
+        }
+    }
+
+    function displayMealPlan(plan) {
+        document.getElementById('noMealPlanPlaceholder').classList.add('hidden');
+        document.getElementById('mealPlanContainer').classList.remove('hidden');
+
+        // Update header info
+        const startDate = new Date(plan.startDate).toLocaleDateString();
+        const endDate = new Date(plan.endDate).toLocaleDateString();
+        document.getElementById('planDate').textContent = `${startDate} to ${endDate}`;
+
+        // Store current plan ID for delete functionality
+        document.getElementById('mealPlanContainer').dataset.planId = plan.id;
+
+        // AI Explanation
+        document.querySelector('#aiExplanation p').textContent = plan.aiExplanation || 'Meal plan generated based on your preferences';
+
+        // Macros
+        document.getElementById('avgCalories').textContent = `${Math.round(plan.estimatedDailyCalories || 2000)} cal`;
+        if (plan.avgMacros) {
+            document.getElementById('proteinValue').textContent = `${Math.round(plan.avgMacros.protein || 85)}g`;
+            document.getElementById('carbsValue').textContent = `${Math.round(plan.avgMacros.carbs || 200)}g`;
+            document.getElementById('fatValue').textContent = `${Math.round(plan.avgMacros.fat || 50)}g`;
+        }
+
+        // Daily Meals
+        const container = document.getElementById('dailyMealsContainer');
+        container.innerHTML = '';
+        
+        if (!plan.dailyPlans || plan.dailyPlans.length === 0) {
+            container.innerHTML = '<p class="text-gray-500 text-center py-8">No meal plans available</p>';
+            return;
+        }
+        
+        plan.dailyPlans.forEach((day, index) => {
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'border border-gray-200 rounded-lg overflow-hidden';
+            
+            const dayHeader = document.createElement('div');
+            dayHeader.className = 'bg-gray-100 px-4 py-3 cursor-pointer hover:bg-gray-200 flex justify-between items-center';
+            
+            const totalCalories = (day.totalDayCalories || 0);
+            const totalCost = (day.totalDayCost || 0);
+            
+            dayHeader.innerHTML = `<h4 class="font-bold text-gray-800">Day ${day.dayNumber} - ${day.dayName}</h4><span class="text-sm text-gray-600">${Math.round(totalCalories)} cal | ₹${totalCost.toFixed(2)}</span>`;
+            
+            const dayContent = document.createElement('div');
+            dayContent.className = 'hidden p-4 space-y-4';
+            
+            let breakfastHtml = '';
+            if (day.breakfast && day.breakfast.length > 0) {
+                breakfastHtml = `
+                    <div>
+                        <h5 class="font-semibold text-gray-700 mb-2">🌅 Breakfast</h5>
+                        <div class="space-y-2">
+                            ${day.breakfast.map(meal => `
+                                <div class="bg-orange-50 p-2 rounded flex justify-between items-start text-sm">
+                                    <div class="flex-1">
+                                        <p class="font-medium text-gray-800">${meal.itemName || 'Meal Item'}</p>
+                                        <p class="text-xs text-gray-600">Protein: ${Math.round(meal.protein || 0)}g | Carbs: ${Math.round(meal.carbs || 0)}g | Fat: ${Math.round(meal.fat || 0)}g</p>
+                                    </div>
+                                    <div class="text-right ml-2">
+                                        <p class="font-semibold text-orange-600">${meal.calories || 0} cal</p>
+                                        <p class="text-gray-600">₹${(meal.price || 0).toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            let lunchHtml = '';
+            if (day.lunch && day.lunch.length > 0) {
+                lunchHtml = `
+                    <div>
+                        <h5 class="font-semibold text-gray-700 mb-2">☀️ Lunch</h5>
+                        <div class="space-y-2">
+                            ${day.lunch.map(meal => `
+                                <div class="bg-green-50 p-2 rounded flex justify-between items-start text-sm">
+                                    <div class="flex-1">
+                                        <p class="font-medium text-gray-800">${meal.itemName || 'Meal Item'}</p>
+                                        <p class="text-xs text-gray-600">Protein: ${Math.round(meal.protein || 0)}g | Carbs: ${Math.round(meal.carbs || 0)}g | Fat: ${Math.round(meal.fat || 0)}g</p>
+                                    </div>
+                                    <div class="text-right ml-2">
+                                        <p class="font-semibold text-green-600">${meal.calories || 0} cal</p>
+                                        <p class="text-gray-600">₹${(meal.price || 0).toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            let dinnerHtml = '';
+            if (day.dinner && day.dinner.length > 0) {
+                dinnerHtml = `
+                    <div>
+                        <h5 class="font-semibold text-gray-700 mb-2">🌙 Dinner</h5>
+                        <div class="space-y-2">
+                            ${day.dinner.map(meal => `
+                                <div class="bg-blue-50 p-2 rounded flex justify-between items-start text-sm">
+                                    <div class="flex-1">
+                                        <p class="font-medium text-gray-800">${meal.itemName || 'Meal Item'}</p>
+                                        <p class="text-xs text-gray-600">Protein: ${Math.round(meal.protein || 0)}g | Carbs: ${Math.round(meal.carbs || 0)}g | Fat: ${Math.round(meal.fat || 0)}g</p>
+                                    </div>
+                                    <div class="text-right ml-2">
+                                        <p class="font-semibold text-blue-600">${meal.calories || 0} cal</p>
+                                        <p class="text-gray-600">₹${(meal.price || 0).toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            dayContent.innerHTML = `
+                ${breakfastHtml}
+                ${lunchHtml}
+                ${dinnerHtml}
+                <div class="border-t pt-3 mt-3">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-semibold text-gray-700">Day Total:</span>
+                        <span class="font-bold text-orange-600 text-lg">${Math.round(totalCalories)} cal | ₹${totalCost.toFixed(2)}</span>
+                    </div>
+                    <button onclick="orderDay('${plan.id}', ${day.dayNumber})" class="w-full gradient-primary text-white font-semibold py-2 rounded-lg hover:opacity-90">
+                        Order This Day's Meals
+                    </button>
+                </div>
+            `;
+            
+            dayHeader.addEventListener('click', () => {
+                dayContent.classList.toggle('hidden');
+            });
+            
+            dayDiv.appendChild(dayHeader);
+            dayDiv.appendChild(dayContent);
+            container.appendChild(dayDiv);
+        });
+    }
+
+    function displayPreviousPlans(plans) {
+        document.getElementById('previousPlansContainer').classList.remove('hidden');
+        const listDiv = document.getElementById('previousPlansList');
+        listDiv.innerHTML = plans.map(plan => `
+            <div class="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition" onclick="loadPlanDetails('${plan.id}')">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="font-semibold text-gray-800">${new Date(plan.generatedAt).toLocaleDateString()}</p>
+                        <p class="text-sm text-gray-600">${plan.dailyPlans.length} days | ${plan.dailyPlans.length * 3} meals</p>
+                    </div>
+                    <span class="text-2xl">→</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    async function loadPlanDetails(planId) {
+        try {
+            const res = await fetch(`/api/meal-plans/${planId}`);
+            const plan = await res.json();
+            displayMealPlan(plan);
+        } catch (error) {
+            console.error('Error loading plan:', error);
+        }
+    }
+
+    async function orderDay(planId, dayNumber) {
+        try {
+            const res = await fetch(`/api/meal-plans/${planId}/order-day/${dayNumber}`, { method: 'POST' });
+            if (res.ok) {
+                alert('✅ Order placed successfully! Check your orders page.');
+            }
+        } catch (error) {
+            console.error('Error placing order:', error);
+            alert('Failed to place order');
+        }
+    }
+
+    async function deleteMealPlan() {
+        const planId = document.getElementById('mealPlanContainer').dataset.planId;
+        if (!planId) {
+            alert('No meal plan to delete');
+            return;
+        }
+
+        if (!confirm('Are you sure you want to delete this meal plan? This action cannot be undone.')) {
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/meal-plans/${planId}`, { method: 'DELETE' });
+            if (res.ok) {
+                alert('✅ Meal plan deleted successfully!');
+                document.getElementById('mealPlanContainer').classList.add('hidden');
+                document.getElementById('noMealPlanPlaceholder').classList.remove('hidden');
+                loadMealPlans(); // Reload any previous plans
+            } else {
+                const error = await res.json();
+                alert('❌ Error: ' + (error.error || 'Failed to delete meal plan'));
+            }
+        } catch (error) {
+            console.error('Error deleting meal plan:', error);
+            alert('Failed to delete meal plan');
+        }
+    }
+
+    function logout() {
+        fetch('/api/auth/logout', { method: 'POST' })
+            .then(() => window.location.href = '/login');
+    }
+</script>
+
+</body>
+</html>

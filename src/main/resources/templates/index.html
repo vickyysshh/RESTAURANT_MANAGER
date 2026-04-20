@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Profit Plate - Hero</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff906a",
+                        "secondary": "#ff734c",
+                        "surface": "#0e0e0e",
+                        "on-surface": "#ffffff",
+                        "on-surface-variant": "#adaaaa"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #080606; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .hero-section { position: relative; width: 100%; min-height: 60vh; overflow: hidden; background-color: #ffffff; display: flex; align-items: center; justify-content: center; padding: 5rem 0; }
+        @media (min-width: 1024px) { .hero-section { min-height: 80vh; } }
+        
+        .hero-swirls { position: absolute; inset: 0; z-index: 0; }
+        .hero-swirl { position: absolute; color: rgba(255, 144, 106, 0.08); }
+        .swirl-top { top: 0; left: 0; transform: translate(-33%, -33%); }
+        .swirl-bottom { bottom: 0; right: 0; transform: translate(25%, 25%); }
+        
+        .hero-images { position: absolute; inset: 0; z-index: 10; }
+        .floating-image { position: absolute; object-fit: contain; animation: float 3s ease-in-out infinite; }
+        .image-1 { animation-delay: 0ms; }
+        .image-2 { animation-delay: 300ms; }
+        .image-3 { animation-delay: 600ms; }
+        .image-4 { animation-delay: 900ms; }
+        .image-5 { animation-delay: 1200ms; }
+        .image-6 { animation-delay: 1500ms; }
+        
+        .hero-content { position: relative; z-index: 20; max-width: 42rem; margin: 0 auto; padding: 0 1rem; text-align: center; }
+        .hero-title { font-size: 2.25rem; font-weight: bold; letter-spacing: -0.02em; color: #c75d3a; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; }
+        @media (min-width: 640px) { .hero-title { font-size: 3rem; } }
+        @media (min-width: 768px) { .hero-title { font-size: 3.75rem; } }
+        
+        .hero-description { margin-top: 1rem; font-size: 1.25rem; line-height: 1.6; color: #232121; }
+        
+        /* Navbar Styles */
+        .navbar { background: linear-gradient(135deg, #b5a8a8 0%, #fafafa 100%); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); position: sticky; top: 0; z-index: 100; }
+        .navbar-container { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .navbar-logo { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+        .navbar-logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, #ff906a 0%, #ff734c 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; }
+        .navbar-logo-text { font-size: 1.5rem; font-weight: 700; color: #1b1817; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.5px; }
+        
+        .navbar-center { display: none; gap: 2rem; }
+        @media (min-width: 1024px) { .navbar-center { display: flex; } }
+        .navbar-center a { color: #555; font-weight: 500; transition: all 0.3s; text-decoration: none; }
+        .navbar-center a:hover { color: #ff906a; }
+        
+        .navbar-right { display: flex; align-items: center; gap: 1rem; }
+        .search-box { display: none; position: relative; }
+        @media (min-width: 768px) { .search-box { display: flex; align-items: center; background: #f5f5f5; padding: 0.5rem 1rem; border-radius: 25px; border: 1px solid #e0e0e0; } }
+        .search-box input { background: none; border: none; outline: none; width: 200px; color: #333; font-size: 0.9rem; }
+        .search-box input::placeholder { color: #999; }
+        .search-icon { color: #999; cursor: pointer; }
+        
+        .navbar-btn { padding: 0.6rem 1.2rem; font-size: 0.95rem; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+        .btn-secondary { color: #ff906a; background: transparent; border: 1.5px solid #ff906a; }
+        .btn-secondary:hover { background: #ff906a; color: white; }
+        .btn-primary { color: white; background: linear-gradient(135deg, #ff906a 0%, #ff734c 100%); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 144, 106, 0.3); }
+        .btn-icon { width: 40px; height: 40px; border-radius: 50%; border: none; background: #f5f5f5; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.2rem; }
+        .btn-icon:hover { background: #ff906a; color: white; }
+        
+        /* Welcome Section */
+        .welcome-section { background-color: #ffffff; padding: 4rem 2rem; }
+        .welcome-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        @media (max-width: 768px) { .welcome-container { grid-template-columns: 1fr; } }
+        .welcome-image { position: relative; }
+        .welcome-image img { width: 100%; max-width: 400px; height: auto; border-radius: 12px; }
+        .welcome-content h2 { font-size: 2.5rem; font-weight: 700; color: #1b1817; font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 1.5rem; line-height: 1.2; }
+        .welcome-content p { font-size: 1rem; color: #666; line-height: 1.8; margin-bottom: 2rem; }
+        .welcome-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+        
+        /* Testimonials Section */
+        .testimonials-section { background-color: #fafafa; padding: 4rem 2rem; }
+        .testimonials-container { max-width: 1200px; margin: 0 auto; }
+        .testimonials-header { text-align: center; margin-bottom: 3rem; }
+        .testimonials-header h2 { font-size: 2.5rem; font-weight: 700; color: #1b1817; font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 1rem; }
+        .testimonials-header p { font-size: 1rem; color: #999; max-width: 500px; margin: 0 auto; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .testimonial-card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); text-align: center; transition: all 0.3s; }
+        .testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12); }
+        .testimonial-avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 1.5rem; object-fit: cover; border: 3px solid #ff906a; }
+        .testimonial-rating { color: #ffc107; font-size: 1.2rem; margin-bottom: 1rem; letter-spacing: 2px; }
+        .testimonial-text { font-size: 0.95rem; color: #666; line-height: 1.6; margin-bottom: 1.5rem; }
+        .testimonial-name { font-weight: 700; color: #1b1817; font-size: 1rem; }
+        .testimonial-role { font-size: 0.85rem; color: #999; }
+        .testimonials-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #ddd; cursor: pointer; transition: all 0.3s; }
+        .dot.active { background: #ff906a; }
+        
+        /* Footer Styles */
+        .footer { background-color: #1b1817; color: #fff; padding: 3rem 2rem 1rem; }
+        .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1.5fr 1.5fr 1.2fr; gap: 2rem; margin-bottom: 2rem; }
+        @media (max-width: 768px) { .footer-container { grid-template-columns: 1fr; gap: 2rem; } }
+        
+        .footer-section-left { margin: 0; }
+        .footer-logo { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+        .footer-logo-icon { width: 35px; height: 35px; background: linear-gradient(135deg, #ff906a 0%, #ff734c 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; }
+        .footer-logo-text { font-size: 1.2rem; font-weight: 700; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .footer-description { font-size: 0.9rem; color: #aaa; line-height: 1.6; margin-bottom: 1rem; }
+        .footer-description a { color: #ff906a; text-decoration: none; font-weight: 600; }
+        .footer-description a:hover { text-decoration: underline; }
+        
+        .opening-hours { margin-top: 1.5rem; }
+        .opening-hours h4 { font-size: 0.85rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+        .hours-row { display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.85rem; color: #aaa; }
+        .hours-day { font-weight: 600; }
+        .hours-time { color: #999; }
+        
+        .footer-section h3 { font-size: 0.85rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.2rem; }
+        .footer-section ul { list-style: none; padding: 0; margin: 0; }
+        .footer-section ul li { margin-bottom: 0.8rem; }
+        .footer-section ul li a { color: #aaa; font-size: 0.9rem; text-decoration: none; transition: color 0.3s; }
+        .footer-section ul li a:hover { color: #ff906a; }
+        
+        .footer-social { display: flex; gap: 1rem; align-items: flex-start; }
+        .social-icon { width: 35px; height: 35px; border: 1.5px solid #444; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; text-decoration: none; }
+        .social-icon:hover { border-color: #ff906a; color: #ff906a; background: rgba(255, 144, 106, 0.1); }
+        
+        .footer-divider { border-top: 1px solid #333; margin-top: 2rem; padding-top: 1.5rem; color: #666; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
+        .footer-copyright { margin: 0; }
+        .footer-links { display: flex; gap: 1.5rem; }
+        .footer-links a { color: #666; text-decoration: none; transition: color 0.3s; font-size: 0.85rem; }
+        .footer-links a:hover { color: #ff906a; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <!-- Left: Logo & Title -->
+            <div class="navbar-logo">
+                <div class="navbar-logo-icon">🍽️</div>
+                <span class="navbar-logo-text">Profit Plate</span>
+            </div>
+
+            <!-- Center: Navigation Links -->
+            <div class="navbar-center">
+                <a href="/">Home</a>
+                <a href="/restaurant-menu">Browse Menu</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <!-- Right: Actions -->
+            <div class="navbar-right">
+                <!-- Search Box -->
+                <div class="search-box">
+                    <input type="text" placeholder="Search restaurants..." />
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </div>
+
+                <!-- Cart Icon -->
+                <button class="btn-icon" title="Shopping Cart">
+                    🛒
+                </button>
+
+                <!-- Sign In Button -->
+                <a href="/login" class="navbar-btn btn-secondary">Sign In</a>
+
+                <!-- Sign Up Button -->
+                <a href="/signup" class="navbar-btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <!-- Decorative SVG Swirls -->
+        <div class="hero-swirls">
+            <svg class="hero-swirl swirl-top" width="600" height="600" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M515.266 181.33C377.943 51.564 128.537 136.256 50.8123 293.565C-26.9127 450.874 125.728 600 125.728 600" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <svg class="hero-swirl swirl-bottom" width="700" height="700" viewBox="0 0 700 700" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M26.8838 528.274C193.934 689.816 480.051 637.218 594.397 451.983C708.742 266.748 543.953 2.22235 543.953 2.22235" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+        </div>
+
+        <!-- Floating Food Images -->
+        <div class="hero-images">
+            <img src="https://b.zmtcdn.com/data/o2_assets/110a09a9d81f0e5305041c1b507d0f391743058910.png" alt="A delicious cheeseburger" class="floating-image image-1 w-40 sm:w-56 md:w-64 lg:w-72 top-10 left-4 sm:left-10 md:top-20 md:left-20" />
+            <img src="https://b.zmtcdn.com/data/o2_assets/b4f62434088b0ddfa9b370991f58ca601743060218.png" alt="A bamboo steamer with dumplings" class="floating-image image-2 w-28 sm:w-36 md:w-48 top-10 right-4 sm:right-10 md:top-16 md:right-16" />
+            <img src="https://b.zmtcdn.com/data/o2_assets/316495f4ba2a9c9d9aa97fed9fe61cf71743059024.png" alt="A slice of pizza" class="floating-image image-3 w-32 sm:w-40 md:w-56 bottom-8 right-5 sm:right-10 md:bottom-16 md:right-20" />
+            <img src="https://b.zmtcdn.com/data/o2_assets/70b50e1a48a82437bfa2bed925b862701742892555.png" alt="A basil leaf" class="floating-image image-4 w-8 sm:w-12" style="top: 25%; left: 33%;" />
+            <img src="https://b.zmtcdn.com/data/o2_assets/9ef1cc6ecf1d92798507ffad71e9492d1742892584.png" alt="A slice of tomato" class="floating-image image-5 w-8 sm:w-10" style="top: 50%; right: 25%;" />
+            <img src="https://b.zmtcdn.com/data/o2_assets/9ef1cc6ecf1d92798507ffad71e9492d1742892584.png" alt="A slice of tomato" class="floating-image image-6 w-8 sm:w-10" style="top: 75%; left: 25%;" />
+        </div>
+
+        <!-- Text Content -->
+        <div class="hero-content">
+            <h1 class="hero-title">Profit Plate </h1>
+            <p class="hero-description">"Serving quality experiences, Crafted with Care"</p>
+        </div>
+    </section>
+
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+        <div class="welcome-container">
+            <div class="welcome-image">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=500&fit=crop" alt="Delicious food on a black plate" />
+            </div>
+            <div class="welcome-content">
+                <h2>Welcome to Our Restaurant</h2>
+                <p>Experience culinary excellence with our finest dishes prepared by expert chefs. We bring fresh, locally-sourced ingredients to your table with passion and precision. From traditional favorites to innovative creations, every meal is a journey of flavors.</p>
+                <div class="welcome-buttons">
+                    <a href="/restaurant-menu" class="navbar-btn btn-secondary">📋 Menu</a>
+                    <a href="/restaurant-menu#table-booking-section" class="navbar-btn btn-primary">📅 Book a Table</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <div class="testimonials-header">
+                <h2>Our Happy Customers</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
+            </div>
+            <div class="testimonials-grid">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="Ama Amponash" class="testimonial-avatar" />
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Lorem ipsum dolor sit amet, consectetur. Tortor massa nisl quam sit. Vitae congue urtrices neque penatibus mi in quibusque. Leo in cursus enim magnts ante."</p>
+                    <div class="testimonial-name">Ama Amponash</div>
+                    
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Kweku A" class="testimonial-avatar" />
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Lorem ipsum dolor sit amet, consectetur. Tortor massa nisl quam sit. Vitae congue urtrices neque penatibus mi in quibusque. Leo in cursus enim magnts ante."</p>
+                    <div class="testimonial-name">Kweku A</div>
+                    
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" alt="Sarah Johnson" class="testimonial-avatar" />
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Lorem ipsum dolor sit amet, consectetur. Tortor massa nisl quam sit. Vitae congue urtrices neque penatibus mi in quibusque. Leo in cursus enim magnts ante."</p>
+                    <div class="testimonial-name">Sarah Johnson</div>
+                    
+                </div>
+            </div>
+            <div class="testimonials-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Left Section: Logo & Description -->
+            <div class="footer-section-left">
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">🍽️</div>
+                    <span class="footer-logo-text">Restaurant</span>
+                </div>
+                <p class="footer-description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et <a href="#">Learn more</a>
+                </p>
+                <div class="opening-hours">
+                    <h4>Opening Hours</h4>
+                    <div class="hours-row">
+                        <span class="hours-day">Monday - Friday</span>
+                        <span class="hours-time">8:00 am to 9:00 pm</span>
+                    </div>
+                    <div class="hours-row">
+                        <span class="hours-day">Saturday</span>
+                        <span class="hours-time">8:00 am to 8:00 pm</span>
+                    </div>
+                    <div class="hours-row">
+                        <span class="hours-day">Sunday</span>
+                        <span class="hours-time">CLOSED</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Section -->
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="/restaurant-menu">Menu</a></li>
+                    <li><a href="#about">About us</a></li>
+                    <li><a href="#contact">Contact us</a></li>
+                    <li><a href="/restaurant-menu">Main dishes</a></li>
+                </ul>
+            </div>
+
+            <!-- Dishes Section -->
+            <div class="footer-section">
+                <h3>Dishes</h3>
+                <ul>
+                    <li><a href="#fish">Fish & Veggies</a></li>
+                    <li><a href="#tofu">Tofu Chilli</a></li>
+                    <li><a href="#egg">Egg & Cucumber</a></li>
+                    <li><a href="#lumpia">Lumpia w/Sauce</a></li>
+                </ul>
+            </div>
+
+            <!-- Follow Us Section -->
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="footer-social">
+                    <a href="https://facebook.com" class="social-icon" title="Facebook">f</a>
+                    <a href="https://www.instagram.com/vickyysh__/" class="social-icon" title="Instagram">📷</a>
+                    <a href="https://www.linkedin.com/in/vickyysshh" class="social-icon" title="LinkedIn">in</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-divider">
+            <div class="footer-copyright">
+                © 2024 Profit Plate. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms & Conditions</a>
+                <a href="#sitemap">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

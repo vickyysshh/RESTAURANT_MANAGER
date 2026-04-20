@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Profit Plate | Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary": "#ff906a", "secondary": "#ff734c", "surface": "#0e0e0e", "background": "#0e0e0e", "on-surface": "#ffffff", "on-surface-variant": "#adaaaa", "surface-container": "#1a1a1a", "surface-container-high": "#20201f", "surface-container-highest": "#262626", "surface-container-low": "#131313", "outline-variant": "#484847" }, fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Inter"] } } } }</script>
+    <style>.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }</style>
+</head>
+<body class="bg-background text-on-surface">
+    <aside class="fixed left-0 top-0 h-full w-64 bg-stone-950 flex flex-col hidden lg:flex border-r border-white/5 z-50">
+        <div class="px-6 py-8">
+            <div class="text-lg font-black text-white flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">restaurant_menu</span> The Grand Pass
+            </div>
+            <p class="text-[10px] uppercase tracking-widest text-stone-500 mt-1 font-bold">Admin Hub</p>
+        </div>
+        <nav class="flex-1 px-2 space-y-1">
+            <a class="flex items-center gap-3 text-primary bg-stone-900/50 border-l-4 border-primary px-4 py-3 font-medium text-sm" href="/admin-dashboard"><span class="material-symbols-outlined">dashboard</span> Overview</a>
+        </nav>
+        <div class="p-4 mt-auto border-t border-white/5">
+            <a class="flex items-center gap-3 text-stone-400 px-4 py-3 hover:text-white text-sm cursor-pointer" onclick="logout()"><span class="material-symbols-outlined text-sm">logout</span> Logout</a>
+        </div>
+    </aside>
+
+    <header class="fixed top-0 right-0 left-0 lg:left-64 h-16 bg-stone-950/80 backdrop-blur-xl z-40 flex justify-between items-center px-8 border-b border-white/5">
+        <h1 class="font-headline text-xl font-bold text-white">Admin Dashboard</h1>
+        <div class="flex items-center gap-4">
+            <button class="p-2 text-stone-400 hover:text-primary" onclick="refreshData()" title="Refresh data"><span class="material-symbols-outlined">refresh</span></button>
+        </div>
+    </header>
+
+    <main class="lg:ml-64 pt-24 pb-10 px-8 min-h-screen">
+        <div class="grid grid-cols-1 gap-10">
+            <!-- Order Management -->
+            <section class="bg-surface-container rounded-xl overflow-hidden shadow-xl border border-white/5">
+                <div class="px-8 py-6 border-b border-white/5 bg-stone-900/40">
+                    <h2 class="text-xl font-headline font-extrabold text-white">Live Orders</h2>
+                    <p class="text-xs text-on-surface-variant mt-1">Real-time order monitoring.</p>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead><tr class="bg-stone-900/20">
+                            <th class="px-8 py-4 text-xs font-bold uppercase text-on-surface-variant">Order ID</th>
+                            <th class="px-8 py-4 text-xs font-bold uppercase text-on-surface-variant">Items</th>
+                            <th class="px-8 py-4 text-xs font-bold uppercase text-on-surface-variant">Total</th>
+                            <th class="px-8 py-4 text-xs font-bold uppercase text-on-surface-variant">Status</th>
+                            <th class="px-8 py-4 text-xs font-bold uppercase text-on-surface-variant text-right">Actions</th>
+                        </tr></thead>
+                        <tbody id="orderTableBody" class="divide-y divide-white/5"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        async function loadOrders() {
+            const resp = await fetch('/api/orders');
+            if (!resp.ok) return;
+            const orders = await resp.json();
+            const statusColors = { PAID: 'bg-blue-500/20 text-blue-400', PREPARING: 'bg-orange-500/20 text-orange-400', READY: 'bg-green-500/20 text-green-400', DELIVERED: 'bg-stone-700 text-stone-400' };
+            document.getElementById('orderTableBody').innerHTML = orders.map(order => `
+                <tr class="hover:bg-white/5 transition-colors">
+                    <td class="px-8 py-5 text-xs text-stone-400 font-mono">${order.id.slice(-6).toUpperCase()}</td>
+                    <td class="px-8 py-5">${order.items.map(i => `<span class="text-[10px] bg-stone-800 px-2 py-1 rounded inline-block mr-1">${i.quantity}x ${i.menuItem.itemName}</span>`).join('')}</td>
+                    <td class="px-8 py-5 text-sm font-bold text-white">$${(order.totalPrice || 0).toFixed(2)}</td>
+                    <td class="px-8 py-5"><span class="text-[10px] font-black uppercase px-2 py-1 rounded ${statusColors[order.status] || ''}">${order.status}</span></td>
+                    <td class="px-8 py-5 text-right">
+                        <select onchange='updateStatus("${order.id}", this.value)' class="bg-stone-800 border-none text-[10px] font-bold rounded-lg py-1 text-white">
+                            <option value="PAID" ${order.status==='PAID'?'selected':''}>PAID</option>
+                            <option value="PREPARING" ${order.status==='PREPARING'?'selected':''}>PREPARING</option>
+                            <option value="READY" ${order.status==='READY'?'selected':''}>READY</option>
+                            <option value="DELIVERED" ${order.status==='DELIVERED'?'selected':''}>DELIVERED</option>
+                        </select>
+                    </td>
+                </tr>`).join('');
+        }
+
+        async function updateStatus(id, status) {
+            const resp = await fetch(`/api/orders/${id}/status`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status }) });
+            if (!resp.ok) {
+                alert('Failed to update order status');
+            }
+            loadOrders();
+        }
+
+        function refreshData() { loadOrders(); }
+        async function logout() { await fetch('/api/auth/logout', { method: 'POST' }); window.location.href = '/login'; }
+
+        loadOrders();
+        setInterval(loadOrders, 5000);
+    </script>
+</body>
+</html>

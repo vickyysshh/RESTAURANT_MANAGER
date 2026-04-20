@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Profit Plate - Select Your Path</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary": "#ff906a", "secondary": "#ff734c", "surface": "#0e0e0e", "background": "#0e0e0e", "on-surface": "#ffffff", "on-surface-variant": "#adaaaa", "surface-container": "#1a1a1a", "surface-container-high": "#20201f", "surface-container-highest": "#262626", "outline-variant": "#484847" }, fontFamily: { "headline": ["Plus Jakarta Sans"], "body": ["Inter"] } } } }</script>
+    <style>.gradient-overlay { background: linear-gradient(180deg, rgba(14,14,14,0) 0%, rgba(14,14,14,0.9) 100%); }</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col">
+    <main class="flex-grow flex items-center justify-center px-6 py-12">
+        <div class="max-w-6xl w-full">
+            <header class="text-center mb-16">
+                <div class="inline-block px-4 py-1.5 mb-6 rounded-full bg-surface-container-high text-primary text-xs tracking-widest uppercase border border-outline-variant/20">Identity Verification</div>
+                <h1 class="font-headline text-5xl md:text-6xl font-extrabold tracking-tight mb-4 italic text-on-surface">Profit <span class="text-primary">Plate</span></h1>
+                <p class="text-on-surface-variant text-lg max-w-xl mx-auto">Choose your perspective. How will you lead tonight?</p>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <button class="role-card group relative overflow-hidden rounded-xl bg-surface-container border border-outline-variant/10 transition-all duration-300 hover:scale-[1.02] flex flex-col text-left">
+                    <div class="h-40 w-full overflow-hidden relative">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoaaQG7lnrK2ypCw32crlj4CA7lkeCwJXKRmDW3n87i3dPttMbH5H8Z5LSBcYGUm5y-B3-u7I5-lyGX_Rnb243h74FYBKQugpwk7pAkyl0c7uDDs9ZJReOgulmouTcECfw5OIxA4g_wdMmq2e_yvVG-bu0mzh4orQl0S_C6jeel0g5BlQ7Y0Gt44czH0v5GRamhoXuRwl9Tti1cGd5XkF8GhpTyYw59MHBUHAK7qmW31kzPVfgPbpE1Ut1wN7KVH7BscTdw7Rm3R4" alt="Admin" class="w-full h-full object-cover opacity-40">
+                        <div class="absolute inset-0 gradient-overlay"></div>
+                    </div>
+                    <div class="p-8 relative flex-grow">
+                        <div class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-surface-container-highest text-primary"><span class="material-symbols-outlined text-3xl">dashboard</span></div>
+                        <h3 class="font-headline text-2xl font-bold mb-3">Administrator</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Full access to system configurations and global management tools.</p>
+                    </div>
+                    <div class="card-accent absolute top-0 left-0 w-1 h-full bg-primary opacity-0 transition-opacity"></div>
+                </button>
+                <button class="role-card group relative overflow-hidden rounded-xl bg-surface-container border border-outline-variant/10 transition-all duration-300 hover:scale-[1.02] flex flex-col text-left">
+                    <div class="h-40 w-full overflow-hidden relative">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCqzKBE7LavifPXoxm-roP-15Qx3K3esvYFcMU8WdJrtcG6iXYo9jdCLg2qXA_RpzLArNBV5cfhSQbxX3_P41NNkXFpEpJepf3rxttHU56SstXFQpc9rwtiin7UuUirJtrfjIErpHJCQ8KwceYP-AE6wFkrR6rhX6rrLbOqT_ypio9lXX_mIORO-qosF6y-1D1QzdE_RVoXabfYFVGa1pzKB_Nc3u2p1IxrDQw2q1c6wGB7ZCWqkeuAXLO5YuyESwyuu7IXaYfY5w" alt="Manager" class="w-full h-full object-cover opacity-60">
+                        <div class="absolute inset-0 gradient-overlay"></div>
+                    </div>
+                    <div class="p-8 relative flex-grow">
+                        <div class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-surface-container-highest text-primary"><span class="material-symbols-outlined text-3xl">restaurant_menu</span></div>
+                        <h3 class="font-headline text-2xl font-bold mb-3">Restaurant Manager</h3>
+                        <p class="text-on-surface leading-relaxed font-medium">Oversee floor operations and manage the nightly pass.</p>
+                    </div>
+                    <div class="card-accent absolute top-0 left-0 w-1 h-full bg-primary opacity-0 transition-opacity"></div>
+                </button>
+                <button class="role-card group relative overflow-hidden rounded-xl bg-surface-container border border-outline-variant/10 transition-all duration-300 hover:scale-[1.02] flex flex-col text-left">
+                    <div class="h-40 w-full overflow-hidden relative">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsdxRz76xYyaokNzFQtM_RQrsF7RUdm69lgsWz-xUBkTAKXJYohcZDyGrKzW1KnNzr32yYEbvsYLJ2Y7qd-je632JUpiEQnNCNbAJFrsot_rpG8WgPrKX8jjjulidXsYuroItbJvYzrJTwmTTaTQBkAkJQTim9wxRNgVqR51sS798C-sG6XECahAlBcwoYhx0yZYQo0nuzIzM5tD601tCtmBK4a-Fdb1L7XIZWxgQXa6NqQr7SgfAewueeF7yae_OdetL2em_z2Nc" alt="Customer" class="w-full h-full object-cover opacity-40">
+                        <div class="absolute inset-0 gradient-overlay"></div>
+                    </div>
+                    <div class="p-8 relative flex-grow">
+                        <div class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-surface-container-highest text-primary"><span class="material-symbols-outlined text-3xl">shopping_bag</span></div>
+                        <h3 class="font-headline text-2xl font-bold mb-3">Customer/User</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Discover locations and order for pickup or delivery.</p>
+                    </div>
+                    <div class="card-accent absolute top-0 left-0 w-1 h-full bg-primary opacity-0 transition-opacity"></div>
+                </button>
+            </div>
+            <footer class="flex flex-col items-center">
+                <button id="continueBtn" class="group relative px-12 py-4 bg-gradient-to-br from-primary to-secondary rounded-lg font-headline font-bold text-black shadow-2xl transition-all duration-300 hover:shadow-primary/20 hover:translate-y-[-2px] active:scale-95 overflow-hidden text-center inline-block">
+                    <span class="relative z-10 flex items-center gap-3">Continue to <span id="targetName">Dashboard</span> <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span></span>
+                </button>
+            </footer>
+        </div>
+    </main>
+    <script>
+        let selectedRole = 'CUSTOMER';
+        let allowedRoles = ['CUSTOMER'];
+        const roleConfig = { 'ADMIN': { index: 0, path: '/admin-dashboard', name: 'Admin Hub' }, 'MANAGER': { index: 1, path: '/manager-dashboard', name: 'Kitchen Pass' }, 'CUSTOMER': { index: 2, path: '/customer-browse', name: 'Browse' } };
+        function getAllowedRoles(userRole) {
+            if (userRole === 'ADMIN') return ['ADMIN', 'MANAGER', 'CUSTOMER'];
+            if (userRole === 'MANAGER') return ['MANAGER', 'CUSTOMER'];
+            return ['CUSTOMER'];
+        }
+        function updateSelection(role) {
+            if (!allowedRoles.includes(role)) return;
+            selectedRole = role;
+            const config = roleConfig[role];
+            const cards = document.querySelectorAll('.role-card');
+            document.getElementById('targetName').innerText = config.name;
+            document.getElementById('continueBtn').onclick = () => { window.location.href = config.path; };
+            cards.forEach((card, i) => {
+                const accent = card.querySelector('.card-accent');
+                if (i === config.index) { card.classList.add('border-primary/40', 'ring-4', 'ring-primary/5', 'bg-surface-container-highest'); card.classList.remove('bg-surface-container', 'border-outline-variant/10'); if (accent) accent.style.opacity = '1'; }
+                else { card.classList.remove('border-primary/40', 'ring-4', 'ring-primary/5', 'bg-surface-container-highest'); card.classList.add('bg-surface-container', 'border-outline-variant/10'); if (accent) accent.style.opacity = '0'; }
+            });
+        }
+        async function init() {
+            const resp = await fetch('/api/auth/me');
+            if (!resp.ok) { window.location.href = '/login'; return; }
+            const user = await resp.json();
+            allowedRoles = getAllowedRoles(user.role);
+            const cards = document.querySelectorAll('.role-card');
+            cards.forEach((card, i) => {
+                const roles = ['ADMIN','MANAGER','CUSTOMER'];
+                const role = roles[i];
+                if (!allowedRoles.includes(role)) {
+                    card.classList.add('opacity-40', 'cursor-not-allowed');
+                    card.title = 'Not available for your account role';
+                    card.onclick = () => alert('This role is not available for your account.');
+                } else {
+                    card.classList.remove('opacity-40', 'cursor-not-allowed');
+                    card.title = '';
+                    card.onclick = () => updateSelection(role);
+                }
+            });
+            const preferredRole = allowedRoles.includes(user.role) ? user.role : allowedRoles[0];
+            updateSelection(preferredRole || 'CUSTOMER');
+        }
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
