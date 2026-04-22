@@ -15,11 +15,11 @@
             <span class="text-xl font-bold italic text-primary" style="font-family:'Plus Jakarta Sans'">Profit Plate</span>
             <div class="hidden md:flex gap-6">
                 <a class="text-stone-400 font-medium hover:text-primary transition-all" href="/role-selection">Dashboard</a>
-                <a class="text-stone-400 font-medium hover:text-primary transition-all" href="/meal-plan">🍱 AI Meal Planner</a>
                 <a class="text-stone-400 font-medium hover:text-primary transition-all" href="/restaurant-menu">Menu</a>
             </div>
         </div>
         <div class="flex items-center gap-4">
+            <a href="/meal-plan" class="px-4 py-2 bg-gradient-to-r from-primary to-secondary text-black font-bold rounded-lg transition-all shadow-lg shadow-primary/80 hover:shadow-primary/100 hover:scale-105 animate-pulse border border-primary/50 hover:border-primary">🍱 AI Meal Planner</a>
             <button class="material-symbols-outlined text-stone-400 hover:text-primary" onclick="logout()">logout</button>
         </div>
     </nav>
@@ -125,11 +125,6 @@
                 </div>
             </div>
         </section>
-
-        <section class="px-8 py-12 max-w-[1400px] mx-auto">
-            <h2 class="font-headline text-3xl font-bold text-on-surface tracking-tight mb-8">Quick Snacks</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="snacksGrid"></div>
-        </section>
     </main>
 
     <script>
@@ -138,37 +133,7 @@
             window.location.href = '/login';
         }
 
-        async function loadSnacks() {
-            try {
-                const resp = await fetch('/api/menu');
-                const items = await resp.json();
-                const snacks = items.filter(item => item.category === 'snacks');
-                const snacksGrid = document.getElementById('snacksGrid');
-                
-                if (snacks.length === 0) {
-                    snacksGrid.innerHTML = '<div class="col-span-full text-center text-stone-500 py-12">No snacks available</div>';
-                    return;
-                }
-                
-                snacksGrid.innerHTML = snacks.map(item => `
-                    <div class="group bg-stone-900 rounded-2xl overflow-hidden transition-all duration-300 border border-white/5 hover:bg-stone-800">
-                        ${item.imageUrl ? `<div class="h-48 overflow-hidden"><img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.parentElement.style.display='none'" /></div>` : `<div class="h-48 bg-stone-800 flex items-center justify-center"><span class="material-symbols-outlined text-5xl text-stone-600">fastfood</span></div>`}
-                        <div class="p-5">
-                            <div class="flex justify-between items-start mb-2">
-                                <h4 class="font-headline text-lg font-bold text-white">${item.itemName}</h4>
-                                <span class="text-primary font-bold">$${(item.price || 0).toFixed(2)}</span>
-                            </div>
-                            <p class="text-on-surface-variant text-sm mb-3">${item.description || 'Delicious snack'}</p>
-                            <button onclick="window.location.href='/restaurant-menu'" class="w-full py-2 bg-stone-700 hover:bg-primary hover:text-black text-white font-bold rounded-lg transition-all text-sm">Order Now</button>
-                        </div>
-                    </div>
-                `).join('');
-            } catch (err) {
-                console.error('Failed to load snacks:', err);
-            }
-        }
 
-        loadSnacks();
     </script>
 </body>
 </html>

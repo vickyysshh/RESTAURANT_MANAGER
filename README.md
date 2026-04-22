@@ -33,7 +33,7 @@ A modern, full-featured restaurant management system built with Spring Boot. Per
 - Dark mode support
 - Multi-user support with MongoDB
 
-## 🛠️ Tech Stack
+
 
 ### Backend
 - **Java 25.0.1** - Programming language
@@ -166,11 +166,6 @@ restaurant-app/
 1. **Customer** - Browse menu, order, book tables, view meal plans
 2. **Manager** - Monitor operations, view bookings and orders
 3. **Admin** - Full system access, user management, all features
-
-## 📞 Contact & Social Links
-
-- **Instagram**: https://www.instagram.com/vickyysh__/
-- **LinkedIn**: https://www.linkedin.com/in/vickyysshh
 
 ## 📝 License
 

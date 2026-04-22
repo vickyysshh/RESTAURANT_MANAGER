@@ -1,0 +1,36 @@
+pom.xml = lists of all tools/libraries of project
+mvnw.cmd = run your project without needing to install maven separetly
+maven = Maven is a build tool used mainly for Java projects. It helps you manage,
+build, and run your project automatically.
+Themeleaf = Thymeleaf is a Java template engine used to create dynamic web pages (HTML) in Java applications.
+
+In simple terms:
+
+Model = Data structure (what info about a User, MenuItem, etc.)
+Repository = Database operations (save, find, delete data)
+Service = Processing logic (what happens when user orders food)
+Controller = Receives requests, gives responses
+
+3. resources Folder
+application.properties = Configuration file (database URL, port, etc.)
+templates/ = HTML files (the pages users see)
+
+4. target Folder
+Auto-generated folder where:
+
+Your code gets compiled (.class files)
+Final .jar file is created (executable package)
+
+1. wrapper Folder
+
+A helper folder that lets you run Maven without installing it on your computer
+
+
+3 "My project uses 6 main Java modules:
+
+Spring Boot Web - for creating web requests and responses
+Thymeleaf - for creating dynamic HTML pages
+Spring Data MongoDB - for database operations
+Spring Security Crypto - for password encryption
+Jackson - for converting Java objects to JSON
+Spring Boot Test - for testing the application"**
