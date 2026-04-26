@@ -29,6 +29,7 @@ import java.util.*;
 @RequestMapping("/api")
 public class ApiController {
 
+    //auto cret ob witho crte
     @Autowired private UserRepository userRepository;
     @Autowired private MenuItemRepository menuItemRepository;
     @Autowired private OrderRepository orderRepository;
@@ -39,7 +40,7 @@ public class ApiController {
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    // ─── AUTH ────────────────────────────────────────────────────────────────
+    // ─── AUTH ──────
 
     @PostMapping("/auth/signup")
     public ResponseEntity<?> signup(@RequestBody Map<String, String> body, HttpSession session) {

@@ -63,7 +63,7 @@ A modern, full-featured restaurant management system built with Spring Boot. Per
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/vickyysshh/RESTAURANT_MANAGER.git
-cd restaurant-app
+cd restaurant-app  
 ```
 
 ### 2. Ensure MongoDB is Running

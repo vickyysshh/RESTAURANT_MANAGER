@@ -1,11 +1,20 @@
 package com.example.restaurant.model;
+// This tells that the class is inside the "model" package (used for data structures)
 
 import org.springframework.data.annotation.Id;
+// @Id is used to mark a field as a unique identifier (primary key) in Spring Data
+
 import org.springframework.data.mongodb.core.mapping.Document;
+// @Document is used to map this class to a MongoDB collection
+
 import java.util.List;
+// List is used to store multiple values (like a list of items)
 
 @Document(collection = "menuitems")
+// This means objects of this class will be stored in the "menuitems" collection in :contentReference[oaicite:0]{index=0}
+
 public class MenuItem {
+
 
     @Id
     private String id;

@@ -34,3 +34,6 @@ Spring Data MongoDB - for database operations
 Spring Security Crypto - for password encryption
 Jackson - for converting Java objects to JSON
 Spring Boot Test - for testing the application"**
+
+Package = package organizes Java classes into logical groups. It's like a folder structure for your code.
+This declares that the AIGeneratedMealPlan class belongs to the package com.example.restaurant.model.

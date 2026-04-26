@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Document(collection = "aiMealPlans")
+@Document(collection = "aiMealPlans")  //It just maps your Java class → MongoDB collection
 public class AIGeneratedMealPlan {
     
     @Id
@@ -21,7 +21,7 @@ public class AIGeneratedMealPlan {
     private Double estimatedWeeklySpend;
     private Double estimatedDailyCalories;
     
-    // Nutritional summary
+    // Nutritional summary  
     private Map<String, Double> avgMacros; // {"protein": 85, "carbs": 200, "fat": 50}
     
     private LocalDateTime generatedAt;
